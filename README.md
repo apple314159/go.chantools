@@ -1,6 +1,10 @@
-# Channel helpers package for Go language
+# Channel helpers package for Go
 
 This package provides channel helper functions.
+
+It consists of:
+
+* pubsub package with Pub/Sub pattern implementation
 
 ## Copyright
 
