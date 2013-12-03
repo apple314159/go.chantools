@@ -5,6 +5,7 @@ This package provides channel helper functions.
 It consists of:
 
 * pubsub package with Pub/Sub pattern implementation
+* wrapio package with channel I/O implementation
 
 ## Copyright
 
