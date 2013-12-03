@@ -12,4 +12,4 @@ It consists of:
 Copyright (C) 2013 by Maxim Bublis <b@codemonkey.ru>
 
 Channel helpers package released under MIT License.
-See [LICENSE](https://github.com/satori/chantools.go/blob/master/LICENSE) for details.
+See [LICENSE](https://github.com/satori/go.chantools/blob/master/LICENSE) for details.
