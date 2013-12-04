@@ -1,11 +1,17 @@
 # Channel helpers package for Go
 
+[![GoDoc](http://godoc.org/github.com/satori/go.chantools?status.png)](http://godoc.org/github.com/satori/go.chantools)
+
 This package provides channel helper functions.
 
 It consists of:
 
 * pubsub package with Pub/Sub pattern implementation
 * wrapio package with channel I/O implementation
+
+## Documentation
+
+[Documentation](http://godoc.org/github.com/satori/go.chantools) is hosted at GoDoc project.
 
 ## Copyright
 
