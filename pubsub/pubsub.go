@@ -33,7 +33,7 @@ var broker = _broker{subscriptions: make(map[interface{}]map[reflect.Value]bool)
 
 // Broker structure.
 type _broker struct {
-	sync.Mutex
+	sync.RWMutex
 	subscriptions map[interface{}]map[reflect.Value]bool
 }
 
@@ -80,8 +80,8 @@ func Unsub(ch interface{}) error {
 
 // Pub publishes message to subscribed channels.
 func Pub(msg interface{}, topic interface{}) {
-	broker.Lock()
-	defer broker.Unlock()
+	broker.RLock()
+	defer broker.RUnlock()
 
 	for subscriber := range broker.subscriptions[topic] {
 		subscriber.Send(reflect.ValueOf(msg))
