@@ -16,30 +16,30 @@ Use the `go` command:
 package main
 
 import (
-  "fmt"
-  "github.com/satori/go.chantools/pubsub"
+	"fmt"
+	"github.com/satori/go.chantools/pubsub"
 )
 
 func main() {
-  queue1 := make(chan int, 1)
-  pubsub.Sub(queue1, "i_wanna_integer")
-  defer pubsub.Unsub(queue1)
+	queue1 := make(chan int, 1)
+	pubsub.Sub(queue1, "i_wanna_integer")
+	defer pubsub.Unsub(queue1)
 
-  pubsub.Pub(42, "i_wanna_integer")
+	pubsub.Pub(42, "i_wanna_integer")
 
-  i := <-queue1
+	i := <-queue1
 
-  fmt.Printf("Got int: %d", i)
+	fmt.Printf("Got int: %d", i)
 
-  queue2 := make(chan string, 1)
-  pubsub.Sub(queue2, "i_wanna_string")
-  defer pubsub.Unsub(queue2)
+	queue2 := make(chan string, 1)
+	pubsub.Sub(queue2, "i_wanna_string")
+	defer pubsub.Unsub(queue2)
 
-  pubsub.Pub("fourty-two", "i_wanna_string")
+	pubsub.Pub("fourty-two", "i_wanna_string")
 
-  s := <-queue2
+	s := <-queue2
 
-  fmt.Printf("Got string: %s", s)
+	fmt.Printf("Got string: %s", s)
 }
 ```
 
