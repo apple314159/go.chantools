@@ -8,7 +8,7 @@ This package provides pure Go implementation of Publish/Subscribe pattern for Go
 
 Use the `go` command:
 
-  $ go get github.com/satori/go.chantools/pubsub
+	$ go get github.com/satori/go.chantools/pubsub
 
 ## Example
 
