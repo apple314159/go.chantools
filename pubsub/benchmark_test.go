@@ -33,12 +33,12 @@ func BenchmarkSubUnsub(b *testing.B) {
 	}
 }
 
-func BenchmarkSubPubUnsub(b *testing.B) {
+func BenchmarkPub(b *testing.B) {
+	queue := make(chan int, 1)
+	Sub(queue, "i_wanna_benchmark")
 	for i := 0; i < b.N; i++ {
-		queue := make(chan int, 1)
-		Sub(queue, i)
-		Pub(i, i)
+		Pub(i, "i_wanna_benchmark")
 		<-queue
-		Unsub(queue)
 	}
+	Unsub(queue)
 }
