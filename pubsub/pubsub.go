@@ -57,6 +57,21 @@ func Sub(ch interface{}, topic interface{}) error {
 	return nil
 }
 
+func UnsubTopic(ch interface{}, topic interface{}) error {
+	c := reflect.ValueOf(ch)
+
+	if c.Type().Kind() != reflect.Chan {
+		return fmt.Errorf("ch should be channel, got %s", c.Type().Kind())
+	}
+
+	broker.Lock()
+	defer broker.Unlock()
+
+	delete(broker.subscriptions[topic], c)
+
+	return nil
+}
+
 // Unsub unsubscribes channel from notifications.
 // Causes broker to stop sending messages to channel.
 // When Unsub returns, it is guaranteed that channel will not receive
