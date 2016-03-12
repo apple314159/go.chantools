@@ -29,16 +29,16 @@ import (
 )
 
 // Broker.
-var broker = _broker{subscriptions: make(map[interface{}]map[reflect.Value]bool)}
+var broker = _broker{subscriptions: make(map[string]map[reflect.Value]bool)}
 
 // Broker structure.
 type _broker struct {
 	sync.RWMutex
-	subscriptions map[interface{}]map[reflect.Value]bool
+	subscriptions map[string]map[reflect.Value]bool
 }
 
 // Sub subscribes channel ch to topic notifications.
-func Sub(ch interface{}, topic interface{}) error {
+func Sub(ch interface{}, topic string) error {
 	c := reflect.ValueOf(ch)
 
 	if c.Type().Kind() != reflect.Chan {
@@ -57,7 +57,9 @@ func Sub(ch interface{}, topic interface{}) error {
 	return nil
 }
 
-func UnsubTopic(ch interface{}, topic interface{}) error {
+// UnsubTopic unsubscribes a topic/channel from notifications.
+// It leaves all other topic/channel subscriptions alone.
+func UnsubTopic(ch interface{}, topic string) error {
 	c := reflect.ValueOf(ch)
 
 	if c.Type().Kind() != reflect.Chan {
@@ -94,11 +96,27 @@ func Unsub(ch interface{}) error {
 }
 
 // Pub publishes message to subscribed channels.
-func Pub(msg interface{}, topic interface{}) {
+func Pub(msg interface{}, topic string) bool {
 	broker.RLock()
 	defer broker.RUnlock()
 
+	ret := false
 	for subscriber := range broker.subscriptions[topic] {
 		subscriber.Send(reflect.ValueOf(msg))
+		ret = true
 	}
+	return ret
+}
+
+// TryPub publishes message to subscribed channels.
+func TryPub(msg interface{}, topic string) bool {
+	broker.RLock()
+	defer broker.RUnlock()
+
+	ret := false
+	for subscriber := range broker.subscriptions[topic] {
+		subscriber.TrySend(reflect.ValueOf(msg))
+		ret = true
+	}
+	return ret
 }
